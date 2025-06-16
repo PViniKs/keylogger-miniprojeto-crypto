@@ -31,7 +31,6 @@ Proteja a privacidade e cumpra com a legislação local.
 
 ```
 .
-├── keylogger.exe  # Script principal executável
 ├── keylogger.py   # Script principal python
 ├── post.php       # Receptor de dados no servidor
 └── README.MD      # Esse arquivo
