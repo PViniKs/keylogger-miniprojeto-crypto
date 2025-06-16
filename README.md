@@ -9,7 +9,7 @@
 ## 🔎 Descrição
 
 Este é um **keylogger completo para Windows**, desenvolvido como um miniprojeto académico.
-Regista teclado, mouse e janelas ativadas, além de gerar persistência, criptografar os logs com PGP e enviar remotamente via HTTP POST.
+Registra teclado, mouse e janelas ativadas, além de gerar persistência, criptografar os logs com PGP e enviar remotamente via HTTP POST.
 
 ---
 
