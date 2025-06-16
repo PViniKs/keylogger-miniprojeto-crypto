@@ -64,7 +64,7 @@ Proteja a privacidade e cumpra com a legislação local.
 
 ---
 
-## 🌐 Receptor (post.php)
+## 🌐 Receptor (index.php)
 
 - Recebe dados POST.
 - Grava as informações recebidas no banco de dados.
@@ -103,7 +103,7 @@ Qualquer utilização fora do contexto **é da responsabilidade do utilizador**.
 
 ---
 
-## 📞 Contacto
+## 📞 Contatos
 
 - Email Paulo: [pviniks@gmail.com](pviniks@gmail.com)
 - GitHub Paulo: [PViniKs](https://github.com/PViniKs)
