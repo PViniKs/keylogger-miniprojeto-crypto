@@ -81,7 +81,7 @@ Proteja a privacidade e cumpra com a legislação local.
 
 ## 🤝 Contribuições
 
-Este projeto é **fechado** para fins académicos. Mas pode ser estendido com:
+Este projeto é **fechado** para fins acadêmicos. Mas pode ser estendido com:
 
 - Suporte a múltiplos formatos de criptografia
 - Envio via email/FTP
