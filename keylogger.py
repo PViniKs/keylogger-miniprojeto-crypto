@@ -416,7 +416,7 @@ def verifica_caminho():
         return True
 
 def verifica_emulador():
-    if os.cpu_count() <= 1:
+    if os.cpu_count() <= 2:
         return True
     return False
 
